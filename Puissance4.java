@@ -6,6 +6,7 @@ public class Puissance4 {
 	
 	static int colonne = 7;
 	static int ligne = 6;
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		String[][] plateau = new String[ligne][colonne];
 		for (int i=0; i<ligne; i++) {
@@ -13,19 +14,30 @@ public class Puissance4 {
 				plateau[i][j] = ".";
 			}
 		}
+		afficher_plateau(plateau);
 		for (int i=0; i<(colonne*ligne)/2; i++) {
-			System.out.println("Joueur 1 : Entrez un nombre entre 0 et 6");
+			System.out.println("Joueur X : Entrez un nombre entre 0 et 6");
 			Scanner sc = new Scanner(System.in);
 			int e = sc.nextInt();
+			while (e<0 || e>6 || plateau[0][e]!=".") {
+				System.out.println("Erreur!! \nJoueur X : Veuillez entrer un nombre entre 0 et 6");
+				sc = new Scanner(System.in);
+				e = sc.nextInt();
+			}
 			plateau(plateau, 1, e);
 			afficher_plateau(plateau);
 			if (combinaison_gagnante(plateau) || egalite(plateau)) {
 				System.exit(0);
 			}
-			System.out.println("Joueur 2 : Entrez un nombre entre 0 et 6");
-			Scanner sca = new Scanner(System.in);
-			int ee = sc.nextInt();
-			plateau(plateau, 2, ee);
+			System.out.println("Joueur O : Entrez un nombre entre 0 et 6");
+			Scanner sc1 = new Scanner(System.in);
+			e = sc1.nextInt();
+			while (e<0 || e>6 || plateau[0][e]!=".") {
+				System.out.println("Erreur!! \nJoueur O : Veuillez entrer un nombre entre 0 et 6");
+				sc = new Scanner(System.in);
+				e = sc.nextInt();
+			}
+			plateau(plateau, 2, e);
 			afficher_plateau(plateau);
 			if (combinaison_gagnante(plateau) || egalite(plateau)) {
 				System.exit(0);
@@ -59,26 +71,28 @@ public class Puissance4 {
 		
 	 
 	public static void afficher_plateau(String[][] plateau) {
-		//il reste le design
 		for (int i=0; i<ligne; i++) {
+			System.out.print("|");
 			for (int j=0; j<colonne; j++) {
 				if (j == colonne - 1) {
-					System.out.println(plateau[i][j]);
+					System.out.println(plateau[i][j]+"|");
 					continue;
 				}
-				System.out.print(plateau[i][j]+" ");
+				System.out.print(plateau[i][j]+"|");
 			}
+			
 		}
+		System.out.println(" 0 1 2 3 4 5 6 \n");
 	} 
 
 	public static boolean combinaison_gagnante(String[][] plateau) {
 		for (int i=0; i<3; i++) {
 			for (int j=0; j<colonne; j++) {
 				if (plateau[i][j]==plateau[i+1][j] && plateau[i+1][j]==plateau[i+2][j] && plateau[i+2][j]==plateau[i+3][j] && plateau[i+3][j]=="X") {
-					System.out.println("X gagne");
+					System.out.println("\nLe joueur X a gagné");
 					return true;
 				} else if (plateau[i][j]==plateau[i+1][j] && plateau[i+1][j]==plateau[i+2][j] && plateau[i+2][j]==plateau[i+3][j] && plateau[i+3][j]=="O") {
-					System.out.println("O gagne");
+					System.out.println("\nLe joueur O a gagné");
 					return true;
 				}
 			}
@@ -86,10 +100,10 @@ public class Puissance4 {
 		for (int i=0; i<ligne; i++) {
 			for (int j=0; j<3; j++) {
 				if (plateau[i][j]==plateau[i][j+1] && plateau[i][j+1]==plateau[i][j+2] && plateau[i][j+2]==plateau[i][j+3] && plateau[i][j+3]=="X") {
-					System.out.println("X gagne");
+					System.out.println("\nLe joueur X a gagné");
 					return true;
 				} else if (plateau[i][j]==plateau[i][j+1] && plateau[i][j+1]==plateau[i][j+2] && plateau[i][j+2]==plateau[i][j+3] && plateau[i][j+3]=="O") {
-					System.out.println("O gagne");
+					System.out.println("\nLe joueur O a gagné");
 					return true;
 				}
 			}
@@ -97,10 +111,10 @@ public class Puissance4 {
 		for (int i=0; i<3; i++) {
 			for (int j=0; j<4; j++) {
 				if (plateau[i][j]==plateau[i+1][j+1] && plateau[i+1][j+1]==plateau[i+2][j+2] && plateau[i+2][j+2]==plateau[i+3][j+3] && plateau[i+3][j+3]=="X") {
-					System.out.println("X gagne");
+					System.out.println("\nLe joueur X a gagné");
 					return true;
 				} else if (plateau[i][j]==plateau[i+1][j+1] && plateau[i+1][j+1]==plateau[i+2][j+2] && plateau[i+2][j+2]==plateau[i+3][j+3] && plateau[i+3][j+3]=="O") {
-					System.out.println("O gagne");
+					System.out.println("\nLe joueur O a gagné");
 					return true;
 				}
 			}
@@ -108,10 +122,10 @@ public class Puissance4 {
 		for (int i=0; i<3; i++) {
 			for (int j=6; j<2; j--) {
 				if (plateau[i][j]==plateau[i+1][j-1] && plateau[i+1][j-1]==plateau[i+2][j-2] && plateau[i+2][j-2]==plateau[i+3][j-3] && plateau[i+3][j-3]=="X") {
-					System.out.println("X gagne");
+					System.out.println("\nLe joueur X a gagné");
 					return true;
 				} else if (plateau[i][j]==plateau[i+1][j-1] && plateau[i+1][j-1]==plateau[i+2][j-2] && plateau[i+2][j-2]==plateau[i+3][j-3] && plateau[i+3][j-3]=="O") {
-					System.out.println("O gagne");
+					System.out.println("\nLe joueur O a gagné");
 					return true;
 				}
 			}
@@ -128,7 +142,7 @@ public class Puissance4 {
 				}
 			}
 		}
-		System.out.println("Egalité!!!");
+		System.out.println("\nEgalité!!!");
 		return true;
 	}
 	
