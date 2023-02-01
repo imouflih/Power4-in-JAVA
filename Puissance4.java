@@ -1,6 +1,7 @@
 package fr.iliasse.puissance4;
-
+//TESTTETSTETS
 import java.util.Scanner;
+import java.util.FilteringMode;
 
 public class Puissance4 {
 	
